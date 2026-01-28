@@ -7,12 +7,12 @@ import authRouter from "./routes/authRoutes.js";
 import todoRouter from "./routes/todoRoutes.js";
 
 dotenv.config();
-
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
+// db connection
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("DB connection successful!"));
