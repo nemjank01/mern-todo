@@ -23,4 +23,11 @@ const PORT = process.env.PORT || 3000;
 app.use("/api/v1/user", authRouter);
 app.use("/api/v1/todo", todoRouter);
 
+// global error hendler
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal server error";
+  res.status(statusCode).json({ error: message });
+});
+
 app.listen(PORT, () => console.log(`Server is runnig on port ${PORT}...`));
