@@ -18,7 +18,6 @@ mongoose
   .then(() => console.log("DB connection successful!"));
 
 const PORT = process.env.PORT || 3000;
-
 // routes
 app.use("/api/v1/user", authRouter);
 app.use("/api/v1/todo", todoRouter);
