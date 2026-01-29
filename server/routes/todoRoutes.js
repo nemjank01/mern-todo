@@ -6,17 +6,18 @@ import {
   deleteTodo,
   updateTodo,
 } from "../controllers/todoController.js";
+import { verifyToken } from "../utils/verify.js";
 
 const router = express.Router();
 
-router.get("/", getAllTodos);
+router.get("/", verifyToken, getAllTodos);
 
-router.post("/", createTodo);
+router.post("/", verifyToken, createTodo);
 
-router.get("/:id", getTodo);
+router.get("/:id", verifyToken, getTodo);
 
-router.put("/:id", updateTodo);
+router.put("/:id", verifyToken, updateTodo);
 
-router.delete("/:id", deleteTodo);
+router.delete("/:id", verifyToken, deleteTodo);
 
 export default router;
