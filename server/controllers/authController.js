@@ -37,5 +37,11 @@ export async function login(req, res, next) {
     .json({ message: "User logged in" });
 }
 export async function logout(req, res, next) {
-  res.send("logout");
+  res
+    .clearCookie("access_token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({ message: "User logged out" });
 }
