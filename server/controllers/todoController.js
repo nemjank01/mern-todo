@@ -1,5 +1,9 @@
+import Todo from "../models/todoModel.js";
+
 export async function getAllTodos(req, res, next) {
-  res.send("all todos");
+  const todos = await Todo.find({ userId: req.user.id });
+
+  res.status(200).send(todos);
 }
 
 export async function createTodo(req, res, next) {

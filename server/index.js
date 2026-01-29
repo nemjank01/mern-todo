@@ -21,8 +21,8 @@ mongoose
 
 const PORT = process.env.PORT || 3000;
 // routes
-app.use("/api/v1/user", authRouter);
-app.use("/api/v1/todo", todoRouter);
+app.use("/api/v1/users", authRouter);
+app.use("/api/v1/todos", todoRouter);
 
 // global error hendler
 app.use((err, req, res, next) => {
