@@ -34,7 +34,7 @@ export async function login(req, res, next) {
       secure: process.env.NODE_ENV === "production",
     })
     .status(200)
-    .json({ message: "User logged in" });
+    .json({ message: "User logged in", user });
 }
 export async function logout(req, res, next) {
   res
