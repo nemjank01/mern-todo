@@ -30,9 +30,39 @@ export async function getTodo(req, res, next) {
 }
 
 export async function updateTodo(req, res, next) {
-  res.send(`update todo with id ${req.params.id}`);
+  if (!req.body) return next(createError(404, "Missing fields!"));
+
+  try {
+    const todo = await Todo.findById(req.params.id);
+
+    if (!todo) return next(createError(404, "Todo not found!"));
+    if (todo.userId.toString() !== req.user.id)
+      return next(createError(404, "Not Authorized"));
+
+    todo.title = req.body.title || todo.title;
+
+    if (req.body.isComplited !== undefined) {
+      todo.isComplited = req.body.isComplited;
+    }
+    await todo.save();
+
+    res.status(200).json({ message: "Todo updated", todo });
+  } catch (error) {
+    return next(createError(404, "Todo not found!"));
+  }
 }
 
 export async function deleteTodo(req, res, next) {
-  res.send(`delete todo with id ${req.params.id}`);
+  try {
+    const todo = await Todo.deleteOne({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+
+    if (!todo.deletedCount) return next(createError(404, "Todo not found!"));
+
+    res.status(200).json({ message: "Todo deleted!" });
+  } catch (error) {
+    return next(createError(404, "Todo not found!"));
+  }
 }
